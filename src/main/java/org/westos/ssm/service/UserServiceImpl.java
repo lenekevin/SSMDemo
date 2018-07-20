@@ -8,7 +8,7 @@ import org.westos.ssm.pojo.User;
 import javax.annotation.Resource;
 
 
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
