@@ -9,18 +9,17 @@ import org.westos.ssm.service.UserService;
 import org.westos.ssm.pojo.User;
 import javax.servlet.http.HttpServletRequest;
 
-
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("showUser")
+    @RequestMapping("/showUser")
     public ModelAndView home(HttpServletRequest request, Model model) {
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         ModelAndView mav = new ModelAndView();
-        User user = userService.getUserById(new Integer(id));
-        model.addAttribute("showUser", user);
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
         mav.setViewName("showUser");
         return mav;
     }
