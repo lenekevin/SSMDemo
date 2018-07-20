@@ -23,17 +23,24 @@
     <!-- 注册事务切面 -->
     <tx:advice id="tx_advice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="*"/>
+            <!-- 传播行为 -->
+            <tx:method name="save*" propagation="REQUIRED" /><!-- REQUIRED级别:当有事务的时候,使用当前事务,如果没有,开启一个新的事务 -->
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" /><!-- 跟查询相关的方法:设置为只读 -->
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="query*" propagation="SUPPORTS" read-only="true" />
         </tx:attributes>
     </tx:advice>
     <!-- 配置aop代理对象 -->
-    <aop:config proxy-target-class="true">
-        <aop:pointcut id="xxx"
-                      expression="execution(* *.*(..))"/>
-        <aop:advisor advice-ref="tx_advice" pointcut-ref="xxx"/>
+    <aop:config >
+        <aop:advisor advice-ref="tx_advice"
+                     pointcut="execution(* org.westos.ssm.service.*.*(..))" />
+
     </aop:config>
     <!-- 开启spring注解 -->
-    <context:annotation-config/>
+    <!--<context:annotation-config/>-->
     <!-- 扫描service包, Ioc容器创建对象 -->
     <context:component-scan base-package="org.westos.ssm.service"/>
 </beans>

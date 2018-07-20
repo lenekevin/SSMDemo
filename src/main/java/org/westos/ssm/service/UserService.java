@@ -1,7 +1,7 @@
 package org.westos.ssm.service;
 
-import org.westos.ssm.model.User;
+import org.westos.ssm.pojo.User;
 
 public interface UserService {
-    User getUserById(int userId);
+    User getUserById(Integer id);
 }

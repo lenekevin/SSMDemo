@@ -23,8 +23,11 @@
     <mvc:annotation-driven />
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 这里的配置, 我的理解是自动给后面controller的方法 return的字符串加上前缀和后缀,
-        变成一个可用的url地址. 其实, 我也是这样理解的, 哈哈! -->
+        <!-- InternalResourceViewResolver的父类类有两个属性:
+               分别:prefix:前缀
+                   suffix:后缀
+                   可以配置视图的前缀和后缀
+            -->
         <!-- 前缀 -->
         <property name="prefix" value="/jsp"/>
         <!-- 后缀 -->

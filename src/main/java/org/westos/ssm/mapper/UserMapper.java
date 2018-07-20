@@ -1,9 +1,9 @@
-package org.westos.ssm.dao;
+package org.westos.ssm.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.westos.ssm.model.User;
-import org.westos.ssm.model.UserExample;
+import org.westos.ssm.pojo.User;
+import org.westos.ssm.pojo.UserExample;
 
 public interface UserMapper {
     long countByExample(UserExample example);

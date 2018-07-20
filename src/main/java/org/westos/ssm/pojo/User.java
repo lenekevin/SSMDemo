@@ -1,9 +1,12 @@
-package org.westos.ssm.model;
+package org.westos.ssm.pojo;
 
 public class User {
     private Integer id;
+
     private String userName;
+
     private String password;
+
     private Integer age;
 
     public Integer getId() {

@@ -1,4 +1,4 @@
-package org.westos.ssm.model;
+package org.westos.ssm.pojo;
 
 import java.util.ArrayList;
 import java.util.List;

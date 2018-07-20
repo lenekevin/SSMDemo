@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd  ">
     <!-- 引入jdbc配置文件 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="configurer">
         <property name="locations">
@@ -15,24 +15,36 @@
         </property>
     </bean>
     <!-- 配置数据源 -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${driverClass}"/>
-        <property name="jdbcUrl" value="${url}"/>
-        <property name="user" value="${username}"/>
-        <property name="password" value="${password}"/>
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+        <!--<property name="driverClass" value="${driverClass}"/>-->
+        <!--<property name="jdbcUrl" value="${url}"/>-->
+        <!--<property name="user" value="${username}"/>-->
+        <!--<property name="password" value="${password}"/>-->
+    <!--</bean>-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${driverClass}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+        <!-- 连接池的最大数据库连接数 -->
+        <!--<property name="maxActive" value="10" />-->
+        <!-- 最大空闲数 -->
+        <property name="maxIdle" value="5" />
     </bean>
     <!-- 配置Mybatis的文件 ，mapperLocations配置xxxMapper.xml文件位置
     configLocation配置mybatis-config文件位置-->
-    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="factory">
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
         <property name="configuration" value="classpath:/mybatis/sqlMapConfig.xml"/>
+        <!-- 别名包扫描 -->
+        <property name="typeAliasesPackage" value="org.westos.ssm.pojo"/>
     </bean>
     <!-- 通过MapperScannerConfigurer批量扫描此包, 生成所有mapper
     接口的代理对象, 并且生成的每一个代理对象的id为接口名, 并且首字母小写 -->
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
-        <property name="basePackage" value="org.westos.ssm.dao" />
-        <property name="sqlSessionFactoryBeanName" value="factory"/>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.westos.ssm.mapper"/>
     </bean>
-   </beans>
+</beans>
